@@ -1,15 +1,56 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## This function is the constructor for a "special" matrix that is able
+## to save its inverse in the cache to avoid repeated calculations.
+## It provides four methods for getting and setting the matrix and its inverse.
+##
+## The get() method will return the matrix to be inverted.
+## The set(x) method will set a new matrix to be inverted and clear the cache.
+## The getinv() method will return the inverse matrix from the cache
+## The setinv(inv) method will save the inverse matrix in the cache
 
 makeCacheMatrix <- function(x = matrix()) {
-
+    xinv <- NULL
+    
+    get <- function() {
+        x
+    }
+    
+    set <- function(y) {
+        x <<- y
+        xinv <<- NULL
+    }
+    
+    getinv <- function() {
+        xinv
+    }
+    
+    setinv <- function(inv) {
+        xinv <<- inv
+    }
+    
+    list(get = get, set = set, getinv = getinv, setinv = setinv)
 }
 
 
-## Write a short comment describing this function
+## This function returns the inverse matrix of the "special" matrix
+## constructed by the above makeCacheMatrix() constructor.
+## The special matrix is passed as the argument x.
+## If the inverse matrix is available in the cache, a message will
+## be printed. 
+## Otherwise the inverse matrix will be computed and saved in the cache.
+## It is assumed that the matrix is always invertible
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    ## Try to retrieve the inverse from cache 
+    inv <- x$getinv()
+    if (!is.null(inv)) {
+        message("Getting cache data")
+    }
+    else {
+        ## inverse matrix is not available yet
+        ## retrieve matrix, compute its inverse, and save it in cache
+        matrix <- x$get()
+        inv <- solve(matrix)
+        x$setinv(inv)
+    }
+    inv
 }
