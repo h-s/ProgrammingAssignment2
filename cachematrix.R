@@ -1,11 +1,15 @@
 ## This function is the constructor for a "special" matrix that is able
-## to save its inverse in the cache to avoid repeated calculations.
+## to save its inverse in the cache to avoid unnecessary recalculations.
 ## It provides four methods for getting and setting the matrix and its inverse.
+## - get() method will return the matrix to be inverted.
+## - set(x) method will set a new matrix to be inverted and clear the cache.
+## - getinv() method will return the inverse matrix from the cache
+## - setinv(inv) method will save the inverse matrix in the cache
 ##
-## The get() method will return the matrix to be inverted.
-## The set(x) method will set a new matrix to be inverted and clear the cache.
-## The getinv() method will return the inverse matrix from the cache
-## The setinv(inv) method will save the inverse matrix in the cache
+## Once an object is created by this constructor, you may change the underlying
+## matrix to be inverted by the set() method. This will clear the cache, 
+## and a new inverse matrix must be computed the next time via cacheSolve().
+
 
 makeCacheMatrix <- function(x = matrix()) {
     xinv <- NULL
